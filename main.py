@@ -3,10 +3,23 @@ import numpy as np
 import scipy.constants
 import math
 
-# print(scipy.constants.golden)
-# break_point= 1
-# global break_point
+# The target of the code below is to find (by using numerical methods) an optimal vector (or close to optimal) to a given function (g)
+# we first insert a random vector to dimensions function and this function find the best value for each dimension by using the golden ratio function.
 
+
+# The function below gets a vector and returns a scalar
+def g(v):
+    print(v[0]+v[1]*(math.sin(v[1])))
+    return v[0]+v[1]*(math.sin(v[1]))
+
+# The function below gets a vector, an index and a scalar. The function enters the value x in cell k and returns g of the updated vector 
+def g_to_f(v, k, x):
+    v[k] = x
+    return g(v)
+
+# The function below gets a vector, index - for locating the exact cell in the vector, left border, right border, 
+# and another index - for allowing to iterate in the function.
+# The function 
 def golden_ratio(v, j, a, b, k=0):
     if k >= 100:
         print('stop')
@@ -22,15 +35,8 @@ def golden_ratio(v, j, a, b, k=0):
     else:
         k += 1
         golden_ratio(v, j, c_k, b, k)
-
-def g(v):
-    print(v[0]+v[1]*(math.sin(v[1])))
-    return v[0]+v[1]*(math.sin(v[1]))
-
-def g_to_f(v, k, x):
-    v[k] = x
-    return g(v)
-
+        
+# the function gets a vector and for every cell in the vector it performes golden_ration function on it
 def dimensions(v=[1, 1]):
     for j in range(len(v)):
         u = golden_ratio(v, j, 0, 3.14)
